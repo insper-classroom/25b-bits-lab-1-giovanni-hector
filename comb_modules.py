@@ -18,7 +18,7 @@ def exe1(q, a, b):
 
     @always_comb
     def comb():
-        pass
+        q.next = a or (not b)
 
     return instances()
 
@@ -40,11 +40,14 @@ def exe2(q, a, b, c):
     1 1 1 | 1
 
     Não utilize IF!
+
+    é um XNOR
     """
+
 
     @always_comb
     def comb():
-        q.next = a or b
+        q.next = not b^c
 
     return instances()
 
@@ -72,7 +75,7 @@ def exe3(q, a, b, c, d, e):
 
     @always_comb
     def comb():
-        q.next = a
+        q.next = (a or b) and c and d and e
 
     return instances()
 
@@ -102,8 +105,12 @@ def exe5(leds, sw):
 
     @always_comb
     def comb():
-        pass
-
+        leds[0].next = sw[0]
+        leds[1].next = sw[0] and sw[1]
+        leds[2].next = not (sw[0] and sw[1])
+        leds[3].next = sw[0] ^ sw[1]
+        for n in range(4,10):
+            leds[n].next = True
     return instances()
 
 
@@ -120,31 +127,31 @@ def sw2hex(hex_pins, sw):
         elif sw[4:0] == 1:
             hex_pins.next = "1111001"
         elif sw[4:0] == 2:
-            hex_pins.next = "1000000"
+            hex_pins.next = "0100100"
         elif sw[4:0] == 3:
-            hex_pins.next = "1000000"
+            hex_pins.next = "0110000"
         elif sw[4:0] == 4:
-            hex_pins.next = "1000000"
+            hex_pins.next = "0011001"
         elif sw[4:0] == 5:
-            hex_pins.next = "1000000"
+            hex_pins.next = "0010010"
         elif sw[4:0] == 6:
-            hex_pins.next = "1000000"
+            hex_pins.next = "0000010"
         elif sw[4:0] == 7:
-            hex_pins.next = "1000000"
+            hex_pins.next = "1111000"
         elif sw[4:0] == 8:
-            hex_pins.next = "1000000"
+            hex_pins.next = "0000000"
         elif sw[4:0] == 9:
-            hex_pins.next = "1000000"
+            hex_pins.next = "0010000"
         elif sw[4:0] == 10:
-            hex_pins.next = "1000000"
+            hex_pins.next = "0001000"
         elif sw[4:0] == 11:
-            hex_pins.next = "1000000"
+            hex_pins.next = "1001011"
         elif sw[4:0] == 12:
-            hex_pins.next = "1000000"
+            hex_pins.next = "1001100"
         elif sw[4:0] == 13:
-            hex_pins.next = "1000000"
+            hex_pins.next = "1001101"
         elif sw[4:0] == 14:
-            hex_pins.next = "1000000"
+            hex_pins.next = "1001110"
         else:
             hex_pins.next = "1000000"
 
